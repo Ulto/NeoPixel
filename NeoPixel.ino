@@ -189,11 +189,11 @@ void loop() {
     break;
     
     case 19:
-      theaterChase(strip.Color(127,   0,   0), 50); // Red
+      theaterChase(strip.Color(0,   127,   0), 50); // Green
     break;
     
     case 20:
-      theaterChase(strip.Color(0,   127,  0), 50); // Green
+      theaterChase(strip.Color(127,   0,  0), 50); // Red
     break;
     
     case 21:
