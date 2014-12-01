@@ -1,5 +1,7 @@
 /*******************************
  * CrossFire Neopixels  + Greg *
+ * me@zachcross.com            *
+ * greg@pohodich.com           *
  ******************************/
  
  // V1.3
