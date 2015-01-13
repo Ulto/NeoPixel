@@ -43,6 +43,7 @@
    
    // Spectrum Function Settings
    #define maxBrightness  15
+   #define MAX_OPTIONS 23 //The maximum number of NeoPixel options available besides 99
    
 /*************************************************************************************************/
 /***||||||||||||||||||||||||| No Editable Parameters Below This Line ||||||||||||||||||||||||||***/
@@ -347,152 +348,33 @@ void serialEvent() {
 }
 
 void setShowSelection(int showSelection) {
+  if(showSelection < 0 || (showSelection > MAX_OPTIONS && showSelection != 99)) {
+    Serial.println("INVALID INPUT");
+    return;
+  }
+
   static char menuSelectionTEMP = DefaultMenuSelection;
-  
-  switch (showSelection) {
-     case 0:  // 0 - Lights Off
-       menuSelection = 0;
-       Serial.println("Option 0 Selected");
-       printMenu();
-     break;
-     
-     case 1:  // 1 - Traditional, Randon pixels set to random vibrant colors. (DEFAULT)
-       menuSelection = 1;
-       Serial.println("Option 1 Selected");
-     break;
-     
-     case 2:  // 2 - Traditional + Kill, For every pixel that is set, another is blacked out.
-       menuSelection = 2;
-       Serial.println("Option 2 Selected");
-     break;
-     
-     case 3:  // 3 - Traditional RGB Only.
-       menuSelection = 3;
-       Serial.println("Option 3 Selected");
-     break;
-     
-     case 4:  // 4 - Traditional RGB Only + Kill, For every pixel that is set, another is blacked out.
-       menuSelection = 4;
-       Serial.println("Option 4 Selected");
-     break;
-     
-     case 5:  // 5 - Spectrum
-       menuSelection = 5;
-       Serial.println("Option 5 Selected");
-     break;
-     
-     case 6:  // 8 - Blue- White Pulse
-       menuSelection = 6;
-       Serial.println("Option 6 Selected");
-     break;
-     
-     case 7:  //7 - Blue - Red Pulse
-       menuSelection = 7;
-       Serial.println("Option 7 Selected");
-     break;
-     
-     case 8:  // 8 - Blue- Green Pulse
-       menuSelection = 8;
-       Serial.println("Option 8 Selected");
-     break;
-     
-     case 9:  // 9 - Red - White Pulse
-       menuSelection = 9;
-       Serial.println("Option 9 Selected");
-     break;
-     
-     case 10:  //10 - Red - Blue Pulse
-       menuSelection = 10;
-       Serial.println("Option 10 Selected");
-     break;
-     
-     case 11:  // 11 - Red- Green Pulse
-       menuSelection = 11;
-       Serial.println("Option 11 Selected");
-     break;
-     
-     case 12:  // 12 - Green - White Pulse
-       menuSelection = 12;
-       Serial.println("Option 12 Selected");
-     break;
-     
-     case 13:  //13 - Green - Blue Pulse
-       menuSelection = 13;
-       Serial.println("Option 13 Selected");
-     break;
-     
-     case 14:  // 14 - Green - Red Pulse
-       menuSelection = 14;
-       Serial.println("Option 14 Selected");
-     break;
-     
-     case 15:  // 15 - Rainbow
-       menuSelection = 15;
-       Serial.println("Option 15 Selected");
-     break;
-     
-     case 16:  // 16 - Rainbow Cycle
-       menuSelection = 16;
-       Serial.println("Option 16 Selected");
-     break;
-     
-     case 17:  // 17 - Random Pixel Fade
-       menuSelection = 17;
-       Serial.println("Option 17 Selected");
-     break;
-     
-     case 18:  // 18 - Blue Theater Chase
-       menuSelection = 18;
-       Serial.println("Option 18 Selected");
-     break;
-     
-     case 19:  // 19 - Green Theater Chase
-       menuSelection = 19;
-       Serial.println("Option 19 Selected");
-     break;
-     
-     case 20:  // 20 - Red Theater Chase
-       menuSelection = 20;
-       Serial.println("Option 20 Selected");
-     break;
-     
-     case 21:  // 21 - White Theater Chase
-       menuSelection = 21;
-       Serial.println("Option 21 Selected");
-     break;
-     
-     case 22:  // 22 - Rainbow Theater Chase
-       menuSelection = 22;
-       Serial.println("Option 22 Selected");
-     break;
-     
-     case 23:  // 23 - Rainbow Theater Chase
-       menuSelection = 23;
-       Serial.println("Option 23 Selected");
-     break;
-     
-     
-     case 99:  // 9 - View Pixel Set Counter (Current Show Setting Retained)
-       Serial.print("Pixel Sets Since Start: ");
-       Serial.println(pixelSets);
-     break;
-     
-     default:
-       Serial.println("INVALID INPUT");
-     break;
-     
-   }
-   
-   Serial.flush();
+
+  menuSelection = showSelection;
+  Serial.print("Option ");
+  Serial.print(showSelection);
+  Serial.println(" Selected");
+
+  if(showSelection == 0)
+    printMenu();
+  else if(showSelection == 99) {
+    Serial.print("Pixel Sets Since Start: ");
+    Serial.println(pixelSets);
+  }
+
+  Serial.flush();
    
   // Only clear strip if show type has changed
   if (menuSelection != menuSelectionTEMP) {
      // Re-Initialize Strip For Show Change / Restart
      EndToEndWipe(SelectionChangeWipeDelay);
-     
      menuSelectionTEMP = menuSelection;
   }
-   
 }
 
 void EndToEndWipe(int updateDelay) {  
