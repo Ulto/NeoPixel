@@ -377,18 +377,12 @@ void setShowSelection(int showSelection) {
   }
 }
 
-void EndToEndWipe(int updateDelay) {  
+void EndToEndWipe(int updateDelay) {
    int j = strip.numPixels();
-   int i = 1;
-   
    // Account for even / odd number of pixels.
-   if (j % 2) {
-     i = 0;
-   } else {
-     i = 1;
-   }
+   int i = !(j % 2);
    
-   for(i; i <= (strip.numPixels() + 1); i = i + 2) {
+   for(i; i <= (strip.numPixels() + 1); i += 2) {
      strip.setPixelColor(i, 0, 0, 0);
      strip.show();  // Show each time for a quick wipe effect.
      delay(updateDelay);
@@ -527,7 +521,7 @@ void Pulse(uint8_t R_Bright, uint8_t G_Bright, uint8_t B_Bright, uint8_t R_Pulse
         strip.setPixelColor(currentup,  R_Pulse, G_Pulse, B_Pulse);
       
       
-        for(int i = 0; i < 23; i++){
+        for(int i = 0; i < MAX_OPTIONS; i++){
         
           if(currentdown < mid - i)
           {
