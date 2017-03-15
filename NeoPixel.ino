@@ -286,7 +286,7 @@ void printMenu() {
   Serial.println();
   Serial.println(F(" Please Select a Show Type: "));
   Serial.println(F(" 0 - Lights Off & Re-Print Menu"));
-  Serial.println(F(" 1 - Traditional, Randon pixels set to random vibrant colors."));
+  Serial.println(F(" 1 - Traditional, Random pixels set to random vibrant colors."));
   Serial.println(F(" 2 - Traditional + Kill, For every pixel that is set, another is blacked out."));
   Serial.println(F(" 3 - Traditional RGB Only"));
   Serial.println(F(" 4 - Traditional RGB Only + Kill, For every pixel that is set, another is blacked out."));
